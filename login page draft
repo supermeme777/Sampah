@@ -1,0 +1,71 @@
+import tkinter as tk
+from tkinter import messagebox
+import os
+
+def get_greeting():
+    filename = "launch_count.txt"
+    if not os.path.exists(filename):
+        with open(filename, 'w') as f:
+            f.write("1")
+        count = 1
+    else:
+        with open(filename, 'r+') as f:
+            count = int(f.read().strip()) + 1
+            f.seek(0)
+            f.write(str(count))
+
+    if count % 3 == 1:
+        return "Welcome!"
+    elif count % 3 == 2:
+        return "欢迎！"
+    else:
+        return "வரவேற்கிறோம்!"
+
+def show_login_page():
+    clear_screen()
+    greeting = get_greeting()
+    tk.Label(root, text=greeting, font=('Arial', 18)).pack(pady=10)
+    tk.Label(root, text="Email:").pack()
+    email_entry = tk.Entry(root)
+    email_entry.pack(pady=5)
+    tk.Button(root, text="Login", command=show_main_page).pack(pady=5)
+    tk.Button(root, text="Sign Up", command=show_signup_page).pack()
+
+def show_signup_page():
+    clear_screen()
+    tk.Label(root, text="Sign Up", font=('Arial', 18)).pack(pady=10)
+    tk.Label(root, text="Name:").pack()
+    name_entry = tk.Entry(root)
+    name_entry.pack()
+    tk.Label(root, text="Gender:").pack()
+    gender_entry = tk.Entry(root)
+    gender_entry.pack()
+    tk.Label(root, text="Email:").pack()
+    email_entry = tk.Entry(root)
+    email_entry.pack()
+
+    def submit_signup():
+        name = name_entry.get()
+        gender = gender_entry.get()
+        email = email_entry.get()
+        if not name or not gender or not email:
+            messagebox.showwarning("Missing Info", "Please fill all fields.")
+            return
+        show_main_page()
+
+    tk.Button(root, text="Submit", command=submit_signup).pack(pady=10)
+
+def show_main_page():
+    clear_screen()
+    tk.Label(root, text="Main Page", font=('Arial', 18)).pack(pady=20)
+    tk.Label(root, text="Face Scan + Points System Here").pack()
+
+def clear_screen():
+    for widget in root.winfo_children():
+        widget.destroy()
+
+root = tk.Tk()
+root.title("Green Fintech App")
+root.geometry("400x350")
+show_login_page()
+root.mainloop()
