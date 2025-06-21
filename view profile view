@@ -1,0 +1,73 @@
+import tkinter as tk
+
+# Global Profile Data
+user_profile = {
+    "name": "Aisha",
+    "gender": "Female",
+    "email": "aisha@email.com",
+    "language": "Tamil",
+    "points": 125,
+    "inventory": ["Eco Bag", "Bike Credit"],
+    "exchange_history": ["Exchanged 10pts for Voucher", "Used 5pts for Metro Ride"],
+    "locations": ["Kuala Lumpur", "Penang", "Melaka"],
+    "friends": ["Zara", "Ali", "Chen"],
+    "trash_discarded": 14,
+    "badges": ["Eco Hero", "Carbon Saver"]
+}
+
+# Tkinter Window
+root = tk.Tk()
+root.title("View Profile")
+root.geometry("400x600")
+
+# Clear screen function
+def clear_screen():
+    for widget in root.winfo_children():
+        widget.destroy()
+
+# Dummy main page (for back button)
+def show_main_page():
+    clear_screen()
+    tk.Label(root, text="🏠 Main Page", font=('Arial', 18)).pack(pady=20)
+    tk.Button(root, text="View Profile", command=show_profile).pack(pady=10)
+
+# ✅ Your view profile function
+def show_profile():
+    clear_screen()
+    tk.Label(root, text="🌱 Your Green Profile", font=('Arial', 18, 'bold')).pack(pady=10)
+
+    tk.Label(root, text=f"👤 Name: {user_profile.get('name')}").pack()
+    tk.Label(root, text=f"⚧ Gender: {user_profile.get('gender')}").pack()
+    tk.Label(root, text=f"📧 Email: {user_profile.get('email')}").pack()
+    tk.Label(root, text=f"🈁 Language: {user_profile.get('language')}").pack()
+    tk.Label(root, text=f"💚 Points Earned: {user_profile.get('points')}").pack()
+
+    tk.Label(root, text="🎒 Inventory:").pack()
+    for item in user_profile.get("inventory", []):
+        tk.Label(root, text=f" - {item}").pack()
+
+    tk.Label(root, text="🔁 Exchange History:").pack()
+    for entry in user_profile.get("exchange_history", []):
+        tk.Label(root, text=f" - {entry}").pack()
+
+    tk.Label(root, text="📍 Locations Visited:").pack()
+    for loc in user_profile.get("locations", []):
+        tk.Label(root, text=f" - {loc}").pack()
+
+    tk.Label(root, text="👥 Friends:").pack()
+    for friend in user_profile.get("friends", []):
+        tk.Label(root, text=f" - {friend}").pack()
+
+    tk.Label(root, text=f"🗑 Trash Discarded: {user_profile.get('trash_discarded')} items").pack()
+
+    tk.Label(root, text="🏆 Titles/Badges:").pack()
+    for badge in user_profile.get("badges", []):
+        tk.Label(root, text=f" - {badge}").pack()
+
+    tk.Button(root, text="⬅ Back to Main", command=show_main_page).pack(pady=15)
+
+# Start by showing the profile
+show_profile()
+
+# Run app
+root.mainloop()
